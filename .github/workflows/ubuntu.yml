@@ -1,6 +1,11 @@
 name: Ubuntu-Server
 on: 
   workflow_dispatch:
+env:
+  # Change these values if you have forked it for your own works
+  GitHubMail: "sudhiryadav95553555sy@gmail.com"
+  GitHubName: "sudhirsmarty" 
+  Branch: "main"
 defaults:
   run:
     shell: bash
@@ -9,6 +14,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Set Git Configs & Secrets
+      run: |
+        git config --global user.email ${GitHubMail}
+        git config --global user.name ${GitHubName}
+        git config --global credential.helper store
+        echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
     - uses: rokibhasansagar/slimhub_actions@main
     - uses: fastai/workflows/ssh@master
       with:
@@ -17,4 +28,16 @@ jobs:
     - uses: actions/checkout@v2
     - run: source ubuntu-run.sh
     - name: Setup tmate session
+      timeout-minutes: 340
+      continue-on-error: true
       uses: mxschmitt/action-tmate@master
+    - name: Loop Workflow
+      continue-on-error: true
+      run: |
+        # ${GITHUB_REPOSITORY} is the repo slug which runs this script
+        git clone https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
+        cd loop || exit 1
+        echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
+        git add looper.txt
+        git commit -m "Workflow : Loop"
+        git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main  
