@@ -22,6 +22,8 @@ jobs:
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
     - uses: rokibhasansagar/slimhub_actions@main
     - uses: fastai/workflows/ssh@master
+      timeout-minutes: 340
+      continue-on-error: true
       with:
         ssh_key: ${{ secrets.SSH_KEY }}
         key_file: id_ecdsa
