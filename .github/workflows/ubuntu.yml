@@ -23,7 +23,6 @@ jobs:
         git config --global user.name ${GitHubName}
         git config --global credential.helper store
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-    - uses: rokibhasansagar/slimhub_actions@main
     - uses: fastai/workflows/ssh@master
       with:
         ssh_key: ${{ secrets.SSH_KEY }}
