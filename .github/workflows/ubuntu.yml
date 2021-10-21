@@ -41,5 +41,5 @@ jobs:
         cd loop || exit 1
         echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
         git add looper.txt
-        git commit -m "Workflow : Loop"
+        git commit --author="Sushrut1101 <guptasushrut@gmail.com>" -m "Workflow : Loop"
         git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main  
