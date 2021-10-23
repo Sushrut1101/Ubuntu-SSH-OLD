@@ -43,3 +43,6 @@ jobs:
         git add looper.txt
         git commit --author="Sushrut1101 <guptasushrut@gmail.com>" -m "Workflow : Loop"
         git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main  
+        cd ~
+        source ~/.bashrc
+        clear
