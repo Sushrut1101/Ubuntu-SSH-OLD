@@ -28,7 +28,11 @@ jobs:
         ssh_key: ${{ secrets.SSH_KEY }}
         key_file: id_ecdsa
     - uses: actions/checkout@v2
-    - run: source ubuntu-run.sh
+    - run: |
+        cd ~
+        source ~/.bashrc
+        clear
+        source ubuntu-run.sh
     - name: Setup tmate session
       timeout-minutes: 340
       continue-on-error: true
@@ -43,6 +47,3 @@ jobs:
         git add looper.txt
         git commit --author="Sushrut1101 <guptasushrut@gmail.com>" -m "Workflow : Loop"
         git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main  
-        cd ~
-        source ~/.bashrc
-        clear
