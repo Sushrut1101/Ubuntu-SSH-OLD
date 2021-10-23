@@ -23,9 +23,6 @@ jobs:
         git config --global user.name ${GitHubName}
         git config --global credential.helper store
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-        cd ~
-        source ~/.bashrc
-        clear
     - uses: fastai/workflows/ssh@master
       with:
         ssh_key: ${{ secrets.SSH_KEY }}
@@ -41,6 +38,8 @@ jobs:
       continue-on-error: true
       run: |
         # ${GITHUB_REPOSITORY} is the repo slug which runs this script
+        cd /home/runner
+        . .bashrc
         git clone https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
         cd loop || exit 1
         echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
