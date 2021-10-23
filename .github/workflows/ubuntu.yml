@@ -23,15 +23,15 @@ jobs:
         git config --global user.name ${GitHubName}
         git config --global credential.helper store
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+        cd ~
+        source ~/.bashrc
+        clear
     - uses: fastai/workflows/ssh@master
       with:
         ssh_key: ${{ secrets.SSH_KEY }}
         key_file: id_ecdsa
     - uses: actions/checkout@v2
     - run: |
-        cd ~
-        source ~/.bashrc
-        clear
         source ubuntu-run.sh
     - name: Setup tmate session
       timeout-minutes: 340
